@@ -349,11 +349,86 @@ const SETTINGS = { NO_OWNER_EMAIL, OWNER_TAG,
 
 const CloudCoreoJSRunner = require('cloudcoreo-jsrunner-commons');
 const AuditCLOUDTRAIL = new CloudCoreoJSRunner(JSON_INPUT, SETTINGS);
-const letters = AuditCLOUDTRAIL.getLetters();
+let letters = AuditCLOUDTRAIL.getLetters();
+letters.forEach(letter => {
+  letter.payload = addHeaderForSelfServices(letter.payload);
+})
+
 
 const JSONReportAfterGeneratingSuppression = AuditCLOUDTRAIL.getSortedJSONForAuditPanel();
 coreoExport('JSONReport', JSON.stringify(JSONReportAfterGeneratingSuppression));
 coreoExport('report', JSON.stringify(JSONReportAfterGeneratingSuppression['violations']));
+
+
+
+function addHeaderForSelfServices(html) {
+    let style = `
+        <style>
+            .bg {
+                width: 100%;
+                background-color: #D3E7E1;
+                font-family: 'Arial';
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .schedule {
+                font-size: 24px;
+                color:#21896b;
+            }
+            .moose-row {
+                display:flex;
+                justify-content: flex-end;
+                width:50%;
+                overflow: hidden;
+                height: 275px;
+            }
+            .img-moose {
+                width:510px;
+                height:381px;
+                margin-top: -30px;
+                margin-left: auto;
+            }
+            .text-row {
+                width:50%;
+                padding: 60px 0;
+            }
+            .link-req {
+                margin-top: 3px;
+                display: inline-block;
+                text-transform: uppercase;
+                border-radius:5px;
+                color:white !important;
+                background: #3081B7;
+                padding: 15px 20px;
+                font-size: 16px;
+                text-decoration: none;
+                font-weight: bold;" 
+            }
+            @media screen and (max-width: 620px) {
+              .moose-row {
+               display:none;
+              }
+              .text-row {
+              padding-left: 20px;
+              }
+            }        
+        </style>`;
+    let headerHTMLService = `
+        <div class="bg">
+            <div class="moose-row">
+                <img class="img-moose" src="http://cloudcoreo.wpengine.com/wp-content/uploads/2016/11/Moose_FINAL_green_transparent.png" alt="">
+            </div>
+            <div class="text-row">
+                <p class="schedule">Schedule regular audits <br> and customize your reports.</p>
+                <a class="link-req" href="mailto:sales@cloudcoreo.com?subject=Request an account">Request an account</a>
+            </div>
+        </div>`;
+    let htmlLetter = `<html><head>${style}</head><body>${headerHTMLService}</body></html>`;
+    let indexStart = html.indexOf('<!--ACCOUNT_SUGGESTION_END-->');
+    let indexEnd = html.indexOf('<!-- ACCOUNT_SUGGESTION_START -->');
+
+    return html.replace(html.substring(indexStart, indexEnd), htmlLetter);
+}
 
 callback(letters);
   EOH
