@@ -171,10 +171,10 @@ end
 coreo_uni_util_variables "cloudtrail-planwide" do
   action :set
   variables([
-                {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.composite_name' => 'PLAN::stack_name'},
-                {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.plan_name' => 'PLAN::name'},
-                {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.results' => 'unset'},
-                {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.number_violations' => 'unset'}
+                {'GLOBAL::composite_name' => 'PLAN::stack_name'},
+                {'GLOBAL::plan_name' => 'PLAN::name'},
+                {'GLOBAL::results' => 'unset'},
+                {'GLOBAL::number_violations' => 'unset'}
             ])
 end
 
