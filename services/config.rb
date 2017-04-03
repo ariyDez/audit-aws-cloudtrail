@@ -364,7 +364,7 @@ coreo_uni_util_variables "cloudtrail-update-planwide-3" do
   variables([
                 {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.results' => 'COMPOSITE::coreo_uni_util_jsrunner.cloudtrail-tags-to-notifiers-array.JSONReport'},
                 {'COMPOSITE::coreo_aws_rule_runner_cloudtrail.advise-cloudtrail.report' => 'COMPOSITE::coreo_uni_util_jsrunner.cloudtrail-tags-to-notifiers-array.report'},
-                {'COMPOSITE::coreo_uni_util_variables.cloudtrail-planwide.table' => 'COMPOSITE::coreo_uni_util_jsrunner.cloudtrail-tags-to-notifiers-array.table'}
+                {'GLOBAL::table' => 'COMPOSITE::coreo_uni_util_jsrunner.cloudtrail-tags-to-notifiers-array.table'}
           ])
 end
 
